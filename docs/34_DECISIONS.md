@@ -4,7 +4,7 @@
 
 | ID | Décision | Motif / état |
 |---|---|---|
-| DEC-001 | Backend Python 3.11+, FastAPI, Pydantic v2, SQLAlchemy 2, SQLite | Stack demandée ; Python 3.14.3 local, cible minimale 3.11. Migrations Alembic à ajouter. |
+| DEC-001 | Backend Python 3.11+, FastAPI, Pydantic v2, SQLAlchemy 2, SQLite | Stack demandée ; Python 3.14.3 local, cible minimale 3.11. Migration initiale Alembic appliquée et testée. |
 | DEC-002 | Données de seed versionnées en JSON | Standard intégré, diff lisible, pas de dépendance YAML. |
 | DEC-003 | Ollama local comme provider réel initial ; aucun fallback factice | Ollama 0.35.1 et Qwen3-4B ont été exécutés localement. Les routes runtime/évaluation échouent clairement si Ollama est absent ; les fonctions indépendantes du modèle (registre, calcul, permissions) restent utilisables. |
 | DEC-004 | Licence MIT | Licence permissive gratuite autorisant l'usage commercial ; composants tiers conservent leurs licences. |
@@ -16,6 +16,7 @@
 | DEC-010 | Pilotes proposés : Helpdesk L1 (HAUTE), QA automation (HAUTE), DevOps/cloud (HAUTE) | Couvre assistance, vérification et opérations ; DevOps en validation humaine. Sélection finale à confirmer avant M8 si le compromis métier diffère. |
 | DEC-011 | Dépôt distant non vérifié pour visibilité/contenu ; aucun push autorisé actuellement | `gh` absent ; vérifier `git ls-remote` et visibilité avant v0.1.0. |
 | DEC-012 | Modèle par défaut Qwen3-4B sous Apache-2.0 | Ollama affiche `qwen3:4b`, ID local `359d7dd4bcda`; la carte officielle Qwen indique Apache-2.0. Génération locale observée ; utiliser un autre modèle implique de revalider sa licence et les benchmarks. |
+| DEC-013 | Alembic est la source de vérité du schéma SQLite | `create_schema` applique `upgrade head`; un schéma complet non versionné est estampillé à head sans recréation. Un schéma partiel est refusé et demande une migration dédiée. Upgrade/downgrade et adoption sont testés. |
 
 ## En attente / PLANNED
 

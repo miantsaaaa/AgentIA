@@ -2,4 +2,4 @@
 
 ## Statut : IMPLEMENTED (premières entités)
 
-SQLite contient agents, skills, liaison `agent_skills`, `tool_registry`, `knowledge_packs`, évaluations, certificats, événements d'activité, permissions, approbations, paramètres runtime, audit, missions et événements mission. Le journal d'audit est hash-chaîné côté application ; un accès direct à SQLite peut le modifier. Les tables sont créées par SQLAlchemy ; les migrations Alembic, snapshots et historique versionné d'agent restent PLANNED.
+SQLite contient agents, skills, liaison `agent_skills`, `tool_registry`, `knowledge_packs`, évaluations, certificats, événements d'activité, permissions, approbations, paramètres runtime, audit, missions et événements mission. La migration initiale Alembic couvre ces entités. Un schéma complet préexistant est marqué à head sans recréation ; un schéma incomplet non versionné est refusé. Snapshots et historique versionné d'agent restent PLANNED.

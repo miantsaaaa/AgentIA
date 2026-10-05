@@ -31,7 +31,7 @@
 | 25_ORCHESTRATION | Orchestration | PLANNED |
 | 26_META_AGENTS | Méta-agents | PLANNED |
 | 27_UI_UX | Interface | PLANNED |
-| 28_DATA_MODEL | Données | IMPLEMENTED (registres et missions) |
+| 28_DATA_MODEL | Données | TESTED (registres et migrations) |
 | 29_VERSIONING | Versionnement | DESIGN |
 | 30_API_CONTRACTS | API | IMPLEMENTED |
 | 31_AGENT_CATALOG | Catalogue initial | TESTED |
