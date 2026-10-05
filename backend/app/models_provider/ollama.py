@@ -36,10 +36,19 @@ class OllamaProvider:
         available = self.model in model_names or f"{self.model}:latest" in model_names
         return {"provider": "ollama", "model": self.model, "available": available}
 
-    def generate(self, prompt: str, system: str = "") -> Generation:
+    def generate(
+        self,
+        prompt: str,
+        system: str = "",
+        history: list[dict[str, str]] | None = None,
+    ) -> Generation:
         messages = []
         if system:
             messages.append({"role": "system", "content": system})
+        for turn in history or []:
+            if turn.get("role") not in {"user", "assistant"}:
+                raise ValueError("Rôle conversationnel non autorisé")
+            messages.append({"role": turn["role"], "content": turn["content"]})
         messages.append({"role": "user", "content": prompt})
         response = self._request(
             "/api/chat",

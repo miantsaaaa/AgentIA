@@ -1,7 +1,7 @@
 import argparse
 
 from app.core.database import Session, create_schema, engine
-from app.services.catalog import seed_catalog
+from app.services.catalog import seed_catalog, seed_system_agents
 from app.services.registry import seed_agents
 
 
@@ -13,6 +13,7 @@ def main() -> None:
     with Session(engine) as session:
         print(f"Agents ajoutés : {seed_agents(session)}")
         print(f"Catalogue ajouté : {seed_catalog(session)}")
+        print(f"Agents système ajoutés : {seed_system_agents(session)}")
 
 
 if __name__ == "__main__":

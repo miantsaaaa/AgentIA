@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Any
 
 from app.models.catalog import KnowledgePack, Skill, ToolRecord
+from app.models.system_agent import SystemAgent
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -29,3 +30,7 @@ def seed_catalog(session: Session) -> dict[str, int]:
         "tools": _seed_records(session, ToolRecord, "tools.json", "name"),
         "knowledge": _seed_records(session, KnowledgePack, "knowledge_packs.json", "slug"),
     }
+
+
+def seed_system_agents(session: Session) -> int:
+    return _seed_records(session, SystemAgent, "system_agents.json", "slug")

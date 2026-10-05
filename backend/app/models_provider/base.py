@@ -10,6 +10,11 @@ class Generation:
 
 
 class ModelProvider(Protocol):
-    def generate(self, prompt: str, system: str = "") -> Generation: ...
+    def generate(
+        self,
+        prompt: str,
+        system: str = "",
+        history: list[dict[str, str]] | None = None,
+    ) -> Generation: ...
 
     def health(self) -> dict[str, object]: ...

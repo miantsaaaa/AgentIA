@@ -29,7 +29,7 @@
 | 23_MISSION_ENGINE | Missions | IMPLEMENTED (cycle persistant) |
 | 24_AGENT_RECOMMENDER | Recommandation | TESTED (déterministe) |
 | 25_ORCHESTRATION | Orchestration | PLANNED |
-| 26_META_AGENTS | Méta-agents | PLANNED |
+| 26_META_AGENTS | Méta-agents | IMPLEMENTED (IAntsaM initial) |
 | 27_UI_UX | Interface | PLANNED |
 | 28_DATA_MODEL | Données | TESTED (registres et migrations) |
 | 29_VERSIONING | Versionnement | DESIGN |
@@ -46,5 +46,6 @@
 | 40_AGENT_PRIORITY | Priorités T1-T5 | TESTED |
 | 41_GIT_WORKFLOW | Git et releases | IMPLEMENTED |
 | 42_AGENT_WORKFLOW | Méthode de travail des agents | DESIGN |
+| 43_IMPLEMENTATION_STATUS | État livré et reste à faire | TESTED (checker de statuts) |
 
 Les documents thématiques sont les fichiers numérotés correspondants dans ce répertoire. Les routes réelles sont également exposées par `/openapi.json`.

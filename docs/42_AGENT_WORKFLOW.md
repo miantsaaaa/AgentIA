@@ -23,4 +23,4 @@ Le premier IDE n'écrit que dans les dossiers de workspace explicitement ouverts
 
 ## État de reprise
 
-Le journal courant est `docs/33_TODO.md`, l'avancement des jalons est `docs/32_ROADMAP.md`, les décisions sont `docs/34_DECISIONS.md` et les preuves sont `docs/37_TESTING.md`. Le dernier commit local constitue la base stable pour reprendre ; consulter `git log` et `git status` avant toute nouvelle intervention.
+Le tableau de bord des composants est `docs/43_IMPLEMENTATION_STATUS.md` ; le journal détaillé est `docs/33_TODO.md`, les jalons `docs/32_ROADMAP.md`, les décisions `docs/34_DECISIONS.md` et les preuves `docs/37_TESTING.md`. Le checker pre-commit vérifie que le registre existe et que ses statuts appartiennent à l'enum autorisé. Le dernier commit local constitue la base stable pour reprendre ; consulter `git log` et `git status` avant toute nouvelle intervention.

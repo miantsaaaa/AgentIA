@@ -8,7 +8,7 @@ Ces règles s'appliquent à IAntsaM, aux agents spécialisés et aux contributeu
 2. Formuler une hypothèse locale vérifiable et le test le moins coûteux qui peut l'infirmer.
 3. Travailler en petites étapes cohérentes. Après chaque modification, exécuter immédiatement le test ciblé, puis élargir aux tests/lint nécessaires.
 4. Une fonctionnalité n'est `TESTED` qu'après exécution réelle. Une panne ou une dépendance absente doit rester visible ; aucun résultat de modèle factice ne peut la masquer.
-5. Synchroniser dans le même jalon le code, les tests, le contrat API, les documents concernés, `docs/33_TODO.md`, `CHANGELOG.md` et `docs/34_DECISIONS.md` si une décision évolue.
+5. Synchroniser dans le même jalon le code, les tests, le contrat API, `docs/43_IMPLEMENTATION_STATUS.md`, les documents concernés, `docs/33_TODO.md`, `CHANGELOG.md` et `docs/34_DECISIONS.md` si une décision évolue.
 6. Après validation, créer un commit local Conventional Commit qui décrit précisément cette étape. Ne pas pousser une branche de travail ; aucune publication avant la porte de release.
 7. Terminer chaque étape par un rapport concis : changements, commandes et résultats, limites restantes, hash du commit.
 

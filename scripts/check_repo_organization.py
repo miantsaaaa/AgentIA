@@ -17,6 +17,7 @@ REQUIRED_PATHS = (
     "migrations/versions",
     "scripts",
 )
+ALLOWED_STATUSES = {"CONCEPT", "DESIGN", "PLANNED", "IMPLEMENTED", "TESTED", "PRODUCTION"}
 
 
 def unindexed_documents(root: Path) -> list[str]:
@@ -33,6 +34,29 @@ def unindexed_documents(root: Path) -> list[str]:
     ]
 
 
+def invalid_implementation_statuses(root: Path) -> list[str]:
+    path = root / "docs" / "43_IMPLEMENTATION_STATUS.md"
+    if not path.is_file():
+        return ["docs/43_IMPLEMENTATION_STATUS.md absent"]
+    problems = []
+    entries = 0
+    for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        if not line.startswith("|"):
+            continue
+        columns = [column.strip() for column in line.strip("|").split("|")]
+        if len(columns) < 3 or columns[0] == "Composant" or set(columns[1]) <= {"-", ":"}:
+            continue
+        entries += 1
+        if columns[1] not in ALLOWED_STATUSES:
+            problems.append(
+                f"Statut invalide dans docs/43_IMPLEMENTATION_STATUS.md:{line_number} : "
+                f"{columns[1]}"
+            )
+    if entries == 0:
+        problems.append("docs/43_IMPLEMENTATION_STATUS.md ne contient aucun composant")
+    return problems
+
+
 def find_problems(root: Path = ROOT) -> list[str]:
     problems = [
         f"Répertoire attendu absent : {path}"
@@ -40,9 +64,15 @@ def find_problems(root: Path = ROOT) -> list[str]:
         if not (root / path).is_dir()
     ]
     problems.extend(unindexed_documents(root))
-    for required_file in ("AGENTS.md", "README.md", "docs/42_AGENT_WORKFLOW.md"):
+    for required_file in (
+        "AGENTS.md",
+        "README.md",
+        "docs/42_AGENT_WORKFLOW.md",
+        "docs/43_IMPLEMENTATION_STATUS.md",
+    ):
         if not (root / required_file).is_file():
             problems.append(f"Fichier de gouvernance absent : {required_file}")
+    problems.extend(invalid_implementation_statuses(root))
     return problems
 
 
