@@ -2,7 +2,7 @@
 
 > Source de vérité synthétique : ce qui existe, la preuve disponible et la suite attendue. Le détail des tâches reste dans `docs/33_TODO.md`. Toute modification de code doit mettre à jour ce registre dans le même commit.
 
-État vérifié le 2026-10-05. Le dépôt est sur `dev`; aucune release ni aucun push n'a été effectué. Les états ont le sens défini dans `AGENTS.md` : ils décrivent des preuves, pas une intention.
+État vérifié le 2026-10-06. Le dépôt est sur `dev`; aucune release ni aucun push n'a été effectué. Les états ont le sens défini dans `AGENTS.md` : ils décrivent des preuves, pas une intention.
 
 ## Tableau de bord
 
@@ -20,7 +20,7 @@
 | Cycle de mission | TESTED | Persistance, événements et transitions invalides refusées | Exécuter les étapes et produire un rapport réel |
 | Apprentissage knowledge | TESTED | Ollama évalue la candidate ; approbation versionne/révise ; runtime injecte uniquement les packs assignés ; évaluations périmées refusées | Extension aux skills/exercices, rollback de révision et veille sourcée |
 | IAntsaM, chat local | TESTED | `POST /api/chat` exécuté avec Ollama/Qwen3 réel ; seed idempotent et recommandation Helpdesk vérifiés | Mémoire conversationnelle persistante, plan d'actions et orchestration multi-agent |
-| Modifications de fichiers par IAntsaM | PLANNED | Le chat n'a aucun accès implicite au système de fichiers | IDE workspace-only, preview diff et approbation |
+| Modifications de fichiers par IAntsaM | TESTED | ORM `WorkspaceChange`, service propose/approve/reject/apply, router `/api/workspace` ; 17 tests unitaires et API round-trip (propose → approve → apply → fichier sur disque) | Intégrer dans le chat IAntsaM et l'IDE |
 | Interface IDE et chat latéral | PLANNED | Aucun frontend n'est encore présent dans le dépôt | M6 : React, explorateur, éditeur, choix IAntsaM/agent |
 | Sandbox et PC Gateway | PLANNED | Aucun accès terminal hôte ni élévation | LAB isolé, lecture workspace et preview uniquement |
 | Orchestration et agents pilotes | PLANNED | Aucun workflow multi-agent livré | Exécuter une démo bornée à 3 agents |

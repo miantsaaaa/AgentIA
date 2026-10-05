@@ -12,6 +12,7 @@ from app.models.evaluation import ActivityEvent, Certificate, Evaluation
 from app.models.mission import Mission, MissionEvent
 from app.models.system_agent import SystemAgent
 from app.models.tool_access import AgentPermission, Approval, AuditRecord, RuntimeSetting
+from app.models.workspace import WorkspaceChange
 
 __all__ = [
 	"ActivityEvent",
@@ -32,4 +33,5 @@ __all__ = [
 	"Skill",
 	"SystemAgent",
 	"ToolRecord",
+	"WorkspaceChange",
 ]

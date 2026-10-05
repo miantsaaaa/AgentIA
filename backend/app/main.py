@@ -11,6 +11,7 @@ from app.api.recommendations import router as recommendations_router
 from app.api.runtime import router as runtime_router
 from app.api.tool_registry import router as tool_registry_router
 from app.api.tools import router as tools_router
+from app.api.workspace import router as workspace_router
 from app.core.database import create_schema
 from fastapi import FastAPI
 
@@ -33,6 +34,7 @@ app.include_router(tool_registry_router)
 app.include_router(runtime_router)
 app.include_router(missions_router)
 app.include_router(recommendations_router)
+app.include_router(workspace_router)
 
 
 @app.get("/health", tags=["system"])
