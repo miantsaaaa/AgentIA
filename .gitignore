@@ -16,7 +16,7 @@ coverage/
 .coverage
 *.log
 sandbox-work/
-models/
+/models/
 *.gguf
 *.safetensors
 *.bin
