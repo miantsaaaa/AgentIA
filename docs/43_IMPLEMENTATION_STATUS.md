@@ -10,7 +10,7 @@
 |---|---|---|---|
 | Fondations et setup cross-platform | TESTED | Wrappers PowerShell/Git Bash setup/test/lint exécutés ; `.venv` local | Ajouter les contrôles de release complets |
 | API agents et seed | TESTED | CRUD de base, filtres, pagination ; base vierge seedée 35 puis 0 | API d'activité consultable |
-| Skills, tools, knowledge et Alembic | TESTED | CRUD/relations ; seeds 3/5/1 ; upgrade/downgrade, adoption legacy et table système | Historique et associations knowledge plus riches |
+| Skills, tools, knowledge et Alembic | TESTED | CRUD/relations ; seeds 3/5/1 ; upgrade/downgrade, adoption legacy/backfill, évaluation Qwen, promotion versionnée et rejet des candidats périmés | Découverte de sources fiable/périodique, revue de licences et exercices ciblés |
 | Cycle de vie agent | TESTED | Transitions autorisées/interdites vérifiées | Étendre les arcs selon le workflow complet |
 | Versions, snapshots et rollback agent | PLANNED | Pas encore implémenté | Version candidate, comparaison et rollback |
 | Certification N0 vers N1 | TESTED | Benchmark L1 exécuté avec Ollama/Qwen3-4B réel | Augmenter la couverture et la qualité des benchmarks |
@@ -18,7 +18,7 @@
 | Permissions, audit et tools natifs | TESTED | Refus par défaut, approbation CRITICAL, kill switch, hash-chain et tests | Authentification et audit résistant à l'accès DB direct |
 | Recommandation Smart Box | TESTED | Classement déterministe avec correspondances et manques | Comparaison multi-agent et workflows |
 | Cycle de mission | TESTED | Persistance, événements et transitions invalides refusées | Exécuter les étapes et produire un rapport réel |
-| Apprentissage et promotion | PLANNED | Pas de branche candidate ni promotion implémentée | Snapshot → apprentissage → benchmark → approbation |
+| Apprentissage knowledge | TESTED | Ollama évalue la candidate ; approbation versionne/révise ; runtime injecte uniquement les packs assignés ; évaluations périmées refusées | Extension aux skills/exercices, rollback de révision et veille sourcée |
 | IAntsaM, chat local | TESTED | `POST /api/chat` exécuté avec Ollama/Qwen3 réel ; seed idempotent et recommandation Helpdesk vérifiés | Mémoire conversationnelle persistante, plan d'actions et orchestration multi-agent |
 | Modifications de fichiers par IAntsaM | PLANNED | Le chat n'a aucun accès implicite au système de fichiers | IDE workspace-only, preview diff et approbation |
 | Interface IDE et chat latéral | PLANNED | Aucun frontend n'est encore présent dans le dépôt | M6 : React, explorateur, éditeur, choix IAntsaM/agent |

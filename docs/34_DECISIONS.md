@@ -20,6 +20,8 @@
 | DEC-014 | Le workflow des agents est contrôlé par `AGENTS.md` et un check local | Les changements sont petits, testés avant commit, synchronisés avec la doc et limités au workspace ; l'index documentaire et les dossiers requis sont vérifiés par lint, hook et porte de release. |
 | DEC-015 | `docs/43_IMPLEMENTATION_STATUS.md` est le tableau de bord de reprise | Ce fichier résume livré/en cours/à faire avec preuve et suite ; il est mis à jour dans le même commit que le code et validé par le checker organisation. `33_TODO.md` reste le détail des tâches. |
 | DEC-016 | IAntsaM est un `SystemAgent` distinct des agents métier | Son endpoint de chat appelle Ollama réellement et retourne des recommandations déterministes. Il n'a aucun accès PC implicite ; outils, plan d'action et orchestration restent à implémenter sous permissions. |
+| DEC-017 | L'amélioration continue des connaissances est une boucle candidate, pas une mutation autonome | Source/provenance/licence, scénario Ollama, score, approbation explicite, révision SemVer et assignation agent sont requis. Pas de crawl Internet ni de promotion automatique. |
+| DEC-018 | Une proposition knowledge est liée à la version active évaluée | Si le pack change après l'évaluation, l'approbation est refusée et le candidat doit être réévalué. Les propositions préexistantes sont backfillées depuis la version du pack par migration. |
 
 ## En attente / PLANNED
 

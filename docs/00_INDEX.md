@@ -12,12 +12,12 @@
 | 06_AGENT_LEVELS | Niveaux certifiés | IMPLEMENTED (N0-N1) |
 | 07_AGENT_IDENTITY_CARD | Fiche d'identité | IMPLEMENTED |
 | 08_AGENT_LIFECYCLE | Cycle de vie | IMPLEMENTED (transitions partielles) |
-| 09_LEARNING_SYSTEM | Apprentissage | PLANNED |
+| 09_LEARNING_SYSTEM | Apprentissage | TESTED (proposition et promotion) |
 | 10_EVALUATION | Moteur d'évaluation | TESTED (déterministe, minimal) |
 | 11_BENCHMARKS | Benchmarks | TESTED (un benchmark de démonstration) |
 | 12_SKILLS | Compétences réutilisables | TESTED (CRUD et liaison) |
 | 13_TOOLS | Outils | TESTED (catalogue et runners sûrs) |
-| 14_KNOWLEDGE | Knowledge packs | TESTED (CRUD) |
+| 14_KNOWLEDGE | Knowledge packs | TESTED (version, revue et assignation) |
 | 15_MEMORY | Mémoire | PLANNED |
 | 16_EXPERIENCE | Expérience | PLANNED |
 | 17_SANDBOX | Sandbox | PLANNED |

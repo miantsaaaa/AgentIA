@@ -1,5 +1,5 @@
 # Apprentissage
 
-## Statut : PLANNED
+## Statut : TESTED (knowledge pack)
 
-Approche V1 prévue sans réentraînement des poids : connaissances, skills, exemples, mémoire et configuration versionnés. Le fine-tuning local est une extension future. Aucun parcours d'apprentissage n'est encore livré.
+L'apprentissage livré n'entraîne pas les poids : une proposition de connaissance est évaluée par le modèle local sur un scénario, puis requiert une approbation explicite. La promotion incrémente SemVer et archive l'ancienne révision ; une proposition évaluée sur une version dépassée est refusée. Les packs sont injectés uniquement aux agents assignés. Découverte Internet planifiée/périodique, exercices automatiques, compétences, mémoire, expériences et fine-tuning restent PLANNED.

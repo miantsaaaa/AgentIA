@@ -5,6 +5,7 @@ from app.models.agent import Agent
 from app.models.evaluation import ActivityEvent
 from app.models.system_agent import SystemAgent
 from app.models_provider.ollama import ModelProviderError
+from app.services.knowledge import knowledge_context_for_agent
 from app.services.recommender import recommend_agents
 from app.services.runtime import run_agent, run_system_agent
 from fastapi import APIRouter, Depends, HTTPException
@@ -45,7 +46,12 @@ def chat(request: ChatRequest, session: Session = Depends(get_db)) -> dict[str, 
             event_agent_id = None
             assistant_name = system_agent.name
         else:
-            generation = run_agent(ordinary_agent, request.message, turns)
+            generation = run_agent(
+                ordinary_agent,
+                request.message,
+                turns,
+                knowledge_context_for_agent(session, ordinary_agent.id),
+            )
             recommendations = None
             event_agent_id = ordinary_agent.id
             assistant_name = ordinary_agent.name

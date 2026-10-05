@@ -2,7 +2,16 @@ from datetime import UTC, datetime
 from uuid import uuid4
 
 from app.core.database import Base
-from sqlalchemy import JSON, Boolean, DateTime, ForeignKey, String, Text, UniqueConstraint
+from sqlalchemy import (
+    JSON,
+    Boolean,
+    DateTime,
+    Float,
+    ForeignKey,
+    String,
+    Text,
+    UniqueConstraint,
+)
 from sqlalchemy.orm import Mapped, mapped_column
 
 
@@ -64,5 +73,56 @@ class KnowledgePack(Base):
     reliability: Mapped[float] = mapped_column()
     version: Mapped[str] = mapped_column(String(30), default="1.0.0")
     last_verified: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=lambda: datetime.now(UTC)
+    )
+
+
+class AgentKnowledge(Base):
+    __tablename__ = "agent_knowledge"
+    __table_args__ = (UniqueConstraint("agent_id", "knowledge_pack_id"),)
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=lambda: str(uuid4()))
+    agent_id: Mapped[str] = mapped_column(ForeignKey("agents.id"), index=True)
+    knowledge_pack_id: Mapped[str] = mapped_column(ForeignKey("knowledge_packs.id"), index=True)
+    assigned_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=lambda: datetime.now(UTC)
+    )
+
+
+class KnowledgeProposal(Base):
+    __tablename__ = "knowledge_proposals"
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=lambda: str(uuid4()))
+    knowledge_pack_id: Mapped[str] = mapped_column(ForeignKey("knowledge_packs.id"), index=True)
+    base_version: Mapped[str] = mapped_column(String(30))
+    proposed_content: Mapped[str] = mapped_column(Text)
+    source: Mapped[str] = mapped_column(String(500))
+    source_license: Mapped[str] = mapped_column(String(100))
+    reliability: Mapped[float] = mapped_column(Float)
+    change_reason: Mapped[str] = mapped_column(Text)
+    proposed_by: Mapped[str] = mapped_column(String(160))
+    minimum_score: Mapped[float] = mapped_column(Float, default=1.0)
+    status: Mapped[str] = mapped_column(String(30), default="PENDING_REVIEW", index=True)
+    evaluation_score: Mapped[float | None] = mapped_column(Float, nullable=True)
+    evaluation_details: Mapped[dict[str, object] | None] = mapped_column(JSON, nullable=True)
+    evaluated_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=lambda: datetime.now(UTC)
+    )
+
+
+class KnowledgeRevision(Base):
+    __tablename__ = "knowledge_revisions"
+    __table_args__ = (UniqueConstraint("knowledge_pack_id", "version"),)
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=lambda: str(uuid4()))
+    knowledge_pack_id: Mapped[str] = mapped_column(ForeignKey("knowledge_packs.id"), index=True)
+    version: Mapped[str] = mapped_column(String(30))
+    content: Mapped[str] = mapped_column(Text)
+    source: Mapped[str] = mapped_column(String(500))
+    source_license: Mapped[str] = mapped_column(String(100))
+    reliability: Mapped[float] = mapped_column(Float)
+    change_reason: Mapped[str] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(UTC)
     )

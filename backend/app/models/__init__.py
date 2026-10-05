@@ -1,5 +1,13 @@
 from app.models.agent import Agent
-from app.models.catalog import AgentSkill, KnowledgePack, Skill, ToolRecord
+from app.models.catalog import (
+	AgentKnowledge,
+	AgentSkill,
+	KnowledgePack,
+	KnowledgeProposal,
+	KnowledgeRevision,
+	Skill,
+	ToolRecord,
+)
 from app.models.evaluation import ActivityEvent, Certificate, Evaluation
 from app.models.mission import Mission, MissionEvent
 from app.models.system_agent import SystemAgent
@@ -10,6 +18,7 @@ __all__ = [
 	"Agent",
 	"AgentPermission",
 	"AgentSkill",
+	"AgentKnowledge",
 	"Approval",
 	"AuditRecord",
 	"Certificate",
@@ -17,6 +26,8 @@ __all__ = [
 	"Mission",
 	"MissionEvent",
 	"KnowledgePack",
+	"KnowledgeProposal",
+	"KnowledgeRevision",
 	"RuntimeSetting",
 	"Skill",
 	"SystemAgent",

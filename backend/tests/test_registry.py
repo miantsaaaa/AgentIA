@@ -7,7 +7,7 @@ from app.main import app
 from app.services.catalog import seed_catalog
 from app.services.registry import seed_agents
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, select
 from sqlalchemy.orm import Session
 from sqlalchemy.pool import StaticPool
 
@@ -281,9 +281,73 @@ def test_agent_skill_link_and_knowledge_pack_crud(client: TestClient) -> None:
         "reliability": pack["reliability"],
         "version": pack["version"],
     }
-    updated_pack = client.put(f"/api/knowledge/{pack['id']}", json=updated).json()
-    assert updated_pack["content"] == updated["content"]
+    direct_update = client.put(f"/api/knowledge/{pack['id']}", json=updated)
+    assert direct_update.status_code == 409
+    assert client.get(f"/api/knowledge/{pack['id']}").json()["content"] == pack["content"]
     assert client.delete(f"/api/knowledge/{pack['id']}").status_code == 204
+
+
+def test_candidate_knowledge_is_not_active_before_model_review_and_approval(
+    client: TestClient,
+) -> None:
+    with Session(database.engine) as session:
+        seed_agents(session)
+        seed_catalog(session)
+    agent = client.get("/api/agents", params={"q": "Helpdesk L1"}).json()["items"][0]
+    pack = client.get("/api/knowledge").json()["items"][0]
+    assert client.put(f"/api/agents/{agent['id']}/knowledge/{pack['id']}").status_code == 204
+    candidate_content = "Le code de référence de démonstration est ORION-731."
+    proposal = client.post(
+        f"/api/knowledge/{pack['id']}/proposals",
+        json={
+            "proposed_content": candidate_content,
+            "source": "Créé en interne pour test",
+            "source_license": "MIT",
+            "reliability": 1.0,
+            "change_reason": "Ajout d'un fait de démonstration vérifiable.",
+            "proposed_by": "local_user",
+        },
+    )
+    assert proposal.status_code == 201
+    assert proposal.json()["status"] == "PENDING_REVIEW"
+    active_context = client.get(f"/api/agents/{agent['id']}/knowledge").json()["context"]
+    assert pack["content"] in active_context
+    assert "ORION-731" not in active_context
+    approval = client.post(
+        f"/api/knowledge-proposals/{proposal.json()['id']}/approve",
+        json={"confirm": True},
+    )
+    assert approval.status_code == 409
+
+
+def test_stale_knowledge_proposal_cannot_replace_a_newer_pack_version(client: TestClient) -> None:
+    from app.models.catalog import KnowledgePack, KnowledgeProposal
+    from app.services.knowledge import approve_knowledge_proposal
+
+    with Session(database.engine) as session:
+        seed_catalog(session)
+        pack = session.scalar(select(KnowledgePack))
+        proposal = KnowledgeProposal(
+            knowledge_pack_id=pack.id,
+            base_version=pack.version,
+            proposed_content="Candidate évaluée sur une ancienne version.",
+            source="Créé en interne",
+            source_license="MIT",
+            reliability=1.0,
+            change_reason="Test de protection contre les évaluations obsolètes.",
+            proposed_by="local_user",
+            minimum_score=1.0,
+            status="EVALUATED",
+            evaluation_score=1.0,
+            evaluation_details={"provider": "ollama"},
+        )
+        session.add(proposal)
+        pack.version = "1.0.1"
+        session.commit()
+        with pytest.raises(ValueError, match="version obsolète"):
+            approve_knowledge_proposal(session, proposal)
+        session.refresh(pack)
+        assert pack.content != proposal.proposed_content
 
 
 def test_tool_metadata_crud_cannot_create_or_modify_an_unbacked_runner(client: TestClient) -> None:

@@ -13,6 +13,7 @@
 | P2-04 | P2 | Compléter missions, recommandation et apprentissage | P2-03 | IN_PROGRESS | 09, 23, 24 |
 | P2-05 | P2 | Interface React complète connectée à l'API | P2-01..04 | TODO | 27 |
 | P2-06 | P2 | Étendre IAntsaM vers plan d'actions et orchestration approuvée | P2-03 | IN_PROGRESS | 26, 42, 43 |
+| P2-07 | P2 | Découverte de sources knowledge planifiée avec provenance/licence | P2-04 | TODO | 09, 14, 20 |
 | P3-01 | P3 | Sandbox locale et PC Gateway lecture/preview | P2-05 | TODO | 17, 18 |
 | P3-02 | P3 | Orchestration et trois agents pilotes | P3-01 | TODO | 25, 26 |
 | P3-03 | P3 | Porte de release complète, CI locale, sauvegarde/restauration | P3-02 | TODO | 37, 41 |

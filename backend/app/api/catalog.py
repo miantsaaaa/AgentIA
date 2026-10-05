@@ -160,18 +160,13 @@ def update_knowledge(
     pack = session.get(KnowledgePack, pack_id)
     if pack is None:
         raise HTTPException(status_code=404, detail="Knowledge pack introuvable")
-    for key, value in request.model_dump().items():
-        setattr(pack, key, value)
-    try:
-        session.commit()
-    except IntegrityError as error:
-        session.rollback()
-        raise HTTPException(
-            status_code=409,
-            detail="Identifiant de knowledge pack déjà utilisé",
-        ) from error
-    session.refresh(pack)
-    return KnowledgeRead.model_validate(pack)
+    raise HTTPException(
+        status_code=409,
+        detail=(
+            "Une connaissance active ne peut pas être modifiée directement ; "
+            "créez une proposition à évaluer."
+        ),
+    )
 
 
 @router.delete("/knowledge/{pack_id}", status_code=status.HTTP_204_NO_CONTENT)

@@ -4,6 +4,7 @@ from app.api.agents import router as agents_router
 from app.api.catalog import router as catalog_router
 from app.api.chat import router as chat_router
 from app.api.evaluations import router as evaluations_router
+from app.api.knowledge_workflow import router as knowledge_workflow_router
 from app.api.lifecycle import router as lifecycle_router
 from app.api.missions import router as missions_router
 from app.api.recommendations import router as recommendations_router
@@ -24,6 +25,7 @@ app = FastAPI(title="AgentIA", version="0.0.0", lifespan=lifespan)
 app.include_router(agents_router)
 app.include_router(catalog_router)
 app.include_router(chat_router)
+app.include_router(knowledge_workflow_router)
 app.include_router(evaluations_router)
 app.include_router(lifecycle_router)
 app.include_router(tools_router)

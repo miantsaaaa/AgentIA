@@ -40,6 +40,46 @@ class KnowledgeRead(KnowledgeData):
     last_verified: datetime
 
 
+class KnowledgeProposalCreate(BaseModel):
+    proposed_content: str = Field(min_length=1, max_length=100000)
+    source: str = Field(min_length=1, max_length=500)
+    source_license: str = Field(min_length=1, max_length=100)
+    reliability: float = Field(ge=0, le=1)
+    change_reason: str = Field(min_length=5, max_length=2000)
+    proposed_by: str = Field(min_length=1, max_length=160)
+    minimum_score: float = Field(default=1.0, ge=0.5, le=1.0)
+
+
+class KnowledgeProposalRead(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: str
+    knowledge_pack_id: str
+    base_version: str
+    proposed_content: str
+    source: str
+    source_license: str
+    reliability: float
+    change_reason: str
+    proposed_by: str
+    minimum_score: float
+    status: str
+    evaluation_score: float | None
+    evaluation_details: dict[str, object] | None
+    evaluated_at: datetime | None
+    created_at: datetime
+
+
+class KnowledgeEvaluationRequest(BaseModel):
+    agent_id: str
+    scenario: str = Field(min_length=5, max_length=5000)
+    required_terms: list[str] = Field(min_length=1, max_length=20)
+
+
+class KnowledgeApprovalRequest(BaseModel):
+    confirm: Literal[True]
+
+
 class ToolRecordData(BaseModel):
     name: str = Field(min_length=2, max_length=100, pattern=r"^[a-z0-9]+(?:[._-][a-z0-9]+)*$")
     description: str

@@ -3,6 +3,7 @@ from app.models.agent import Agent
 from app.models.evaluation import ActivityEvent
 from app.models_provider.factory import get_model_provider
 from app.models_provider.ollama import ModelProviderError
+from app.services.knowledge import knowledge_context_for_agent
 from app.services.runtime import run_agent
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field
@@ -33,7 +34,11 @@ def run_agent_route(
     if agent is None:
         raise HTTPException(status_code=404, detail="Agent introuvable")
     try:
-        response = run_agent(agent, request.prompt)
+        response = run_agent(
+            agent,
+            request.prompt,
+            knowledge_context=knowledge_context_for_agent(session, agent.id),
+        )
     except ModelProviderError as error:
         raise HTTPException(status_code=503, detail=str(error)) from error
     session.add(

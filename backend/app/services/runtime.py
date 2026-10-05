@@ -8,13 +8,26 @@ def run_agent(
     agent: Agent,
     prompt: str,
     history: list[dict[str, str]] | None = None,
+    knowledge_context: str = "",
+    knowledge_status: str = "APPROVED",
 ) -> Generation:
     skills = ", ".join(agent.skills) if agent.skills else "aucune compétence certifiée"
+    knowledge_label = (
+        "Connaissances approuvées et assignées"
+        if knowledge_status == "APPROVED"
+        else "Matériel candidat non approuvé fourni uniquement pour évaluation"
+    )
+    knowledge = (
+        f"\n\n{knowledge_label} :\n{knowledge_context[:20000]}"
+        if knowledge_context
+        else ""
+    )
     system = (
         f"Tu es {agent.name}, spécialisé en {agent.domain}. {agent.description} "
         f"Compétences déclarées : {skills}. "
         "Réponds en français, n'invente pas de faits et ne demande jamais de mot de passe, "
         "jeton, clé privée ou autre secret."
+        f"{knowledge}"
     )
     return get_model_provider().generate(prompt, system, history)
 

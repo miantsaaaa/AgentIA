@@ -16,6 +16,8 @@ Les changements notables sont consignés ici, selon Keep a Changelog. Le format 
 - Règles communes de travail des agents et vérification automatisée de l'organisation documentaire.
 - Registre central `docs/43_IMPLEMENTATION_STATUS.md` validé par le checker pre-commit.
 - Agent système IAntsaM seedé séparément, chat Ollama réel et recommandation Helpdesk.
+- Boucle de knowledge pack candidat, évalué par Ollama puis promu avec révision SemVer et assignation explicite.
+- Rejet des propositions évaluées sur une version obsolète et backfill de la version cible en migration.
 
 ### Sécurité
 - Aucun endpoint ne permet de modifier librement le niveau d'un agent.
