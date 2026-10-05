@@ -4,6 +4,10 @@
     "name": "Fondamentaux du support utilisateur L1",
     "certifies_level": "N1",
     "required_skills": ["support utilisateur", "triage"],
-    "minimum_score": 1.0
+    "scenario": "Réponds en français à cet utilisateur : « Depuis la mise à jour de Windows 11, l'application CRM affiche le code E-42 à la connexion. » Propose une étape de diagnostic non destructive. Pose au moins deux questions ciblées. Reprends exactement les termes Windows 11 et E-42. Ne demande aucun secret.",
+    "required_terms": ["Windows 11", "E-42"],
+    "minimum_questions": 2,
+    "forbidden_phrases": ["envoyez votre mot de passe", "communiquez votre mot de passe", "donnez votre mot de passe", "partagez votre mot de passe"],
+    "minimum_score": 0.9
   }
 ]

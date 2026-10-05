@@ -15,8 +15,9 @@ Licences déclarées par leurs projets amont ; compatibilité commerciale selon 
 | Ruff | >=0.9,<1 | MIT | Oui | Lint | flake8 + Black |
 | mypy | >=1.14,<2 | MIT | Oui | Typage (pas encore configuré) | Pyright |
 | React / Vite / TypeScript / Tailwind | PLANNED | MIT / Apache-2.0 (TypeScript) | Oui | Frontend futur | Aucun |
-| Mock model provider | interne | MIT du dépôt | Oui | Tests/démo | Aucun modèle requis |
-| Ollama / llama.cpp | PLANNED, optionnels | MIT | Oui | Inférence locale future | Mock |
+| Ollama | 0.35.1 constaté | MIT | Oui | Provider local d'inférence | llama.cpp (MIT), à intégrer et revalider |
+| Qwen3-4B | `qwen3:4b`, ID local 359d7dd4bcda | Apache-2.0 (carte officielle) | Oui | Modèle réellement exécuté pour runtime et benchmark | Autre modèle sous licence commerciale approuvée |
+| llama.cpp | PLANNED, optionnel | MIT | Oui | Provider local alternatif | Ollama |
 | Docker Engine / Podman | PLANNED, optionnels | Apache-2.0 (Podman) ; Docker Engine licence spécifique | Vérification requise | Sandbox future | Sandbox processus |
 
-Versions précises, licences des dépendances transitives et modèles open-weight à vérifier lors du lockfile et avant tout usage redistribué. Aucun service payant ni modèle n'est requis actuellement.
+Versions précises, licences des dépendances transitives et modèles open-weight à vérifier lors du lockfile et avant tout usage redistribué. Le registre ne requiert pas de modèle ; runtime et évaluation requièrent le modèle local indiqué. Aucun service payant n'est requis.

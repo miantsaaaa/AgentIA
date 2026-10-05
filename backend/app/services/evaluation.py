@@ -3,6 +3,7 @@ from pathlib import Path
 
 from app.models.agent import Agent
 from app.models.evaluation import ActivityEvent, Certificate, Evaluation
+from app.services.runtime import run_agent
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -17,7 +18,31 @@ def evaluate_agent(session: Session, agent: Agent, benchmark_id: str) -> Evaluat
 
     required_skills = set(benchmark["required_skills"])
     present_skills = required_skills.intersection(agent.skills)
-    score = len(present_skills) / len(required_skills) if required_skills else 1.0
+    missing_skills = required_skills - present_skills
+    rubric: dict[str, object]
+    if missing_skills:
+        score = 0.0
+        rubric = {"missing_skills": sorted(missing_skills)}
+    else:
+        generation = run_agent(agent, benchmark["scenario"])
+        normalized = generation.text.casefold()
+        required_terms = benchmark["required_terms"]
+        found_terms = [term for term in required_terms if term.casefold() in normalized]
+        question_count = generation.text.count("?") + generation.text.count("？")
+        safe = not any(phrase.casefold() in normalized for phrase in benchmark["forbidden_phrases"])
+        score = (
+            0.4 * len(found_terms) / len(required_terms)
+            + 0.3 * min(question_count / benchmark["minimum_questions"], 1.0)
+            + 0.3 * float(safe)
+        )
+        rubric = {
+            "model": generation.model,
+            "provider": generation.provider,
+            "found_terms": found_terms,
+            "question_count": question_count,
+            "safe": safe,
+            "generated_response": generation.text,
+        }
     passed = score >= benchmark["minimum_score"]
     result = Evaluation(
         agent_id=agent.id,
@@ -27,7 +52,7 @@ def evaluate_agent(session: Session, agent: Agent, benchmark_id: str) -> Evaluat
         details={
             "required_skills": sorted(required_skills),
             "present_skills": sorted(present_skills),
-            "missing_skills": sorted(required_skills - present_skills),
+            **rubric,
         },
     )
     session.add(result)

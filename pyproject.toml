@@ -24,6 +24,7 @@ where = ["backend"]
 [tool.pytest.ini_options]
 pythonpath = ["backend"]
 testpaths = ["backend/tests"]
+markers = ["integration: tests nécessitant un service local réel"]
 
 [tool.ruff]
 line-length = 100

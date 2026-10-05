@@ -1,3 +1,4 @@
+import os
 from collections.abc import Generator
 
 import pytest
@@ -59,6 +60,8 @@ def test_agent_filters_and_pagination(client: TestClient) -> None:
 
 
 def test_only_successful_evaluation_issues_level_certificate(client: TestClient) -> None:
+    if os.getenv("AGENTIA_RUN_MODEL_TESTS") != "1":
+        pytest.skip("Activer AGENTIA_RUN_MODEL_TESTS=1 pour certifier avec le vrai modèle local")
     with Session(database.engine) as session:
         seed_agents(session)
     agent = client.get("/api/agents", params={"q": "Helpdesk L1"}).json()["items"][0]
@@ -67,9 +70,11 @@ def test_only_successful_evaluation_issues_level_certificate(client: TestClient)
         json={"benchmark_id": "helpdesk-l1-foundations-v1"},
     )
     assert result.status_code == 200
-    assert result.json()["passed"] is True
+    assert result.json()["passed"] is True, result.json()
     assert result.json()["agent_level"] == "N1"
     assert result.json()["agent_status"] == "CERTIFIED"
+    assert result.json()["details"]["generated_response"]
+    assert result.json()["details"]["provider"] == "ollama"
 
 
 def test_failed_evaluation_keeps_agent_at_n0(client: TestClient) -> None:
@@ -95,3 +100,97 @@ def test_invalid_lifecycle_transition_is_rejected(client: TestClient) -> None:
         json={"target_status": "PRODUCTION"},
     )
     assert response.status_code == 409
+
+
+def seeded_agent(client: TestClient) -> dict[str, object]:
+    with Session(database.engine) as session:
+        seed_agents(session)
+    return client.get("/api/agents", params={"q": "Helpdesk L1"}).json()["items"][0]
+
+
+def test_tool_permissions_are_denied_by_default_and_audit_is_valid(client: TestClient) -> None:
+    agent = seeded_agent(client)
+    response = client.post(
+        f"/api/agents/{agent['id']}/tools/calculator/actions",
+        json={"inputs": {"expression": "1 + 2 * 3"}},
+    )
+    assert response.status_code == 403
+    assert client.get("/api/audit/verify").json()["valid"] is True
+
+
+def test_explicit_calculator_permission_executes_safe_math(client: TestClient) -> None:
+    agent = seeded_agent(client)
+    permission = client.put(
+        f"/api/agents/{agent['id']}/permissions/calculator",
+        json={"granted": True},
+    )
+    result = client.post(
+        f"/api/agents/{agent['id']}/tools/calculator/actions",
+        json={"inputs": {"expression": "1 + 2 * 3"}},
+    )
+    assert permission.status_code == 200
+    assert result.status_code == 200
+    assert result.json()["result"]["result"] == 7
+    assert client.get("/api/audit/verify").json()["valid"] is True
+
+
+def test_critical_tool_waits_for_human_approval(client: TestClient) -> None:
+    agent = seeded_agent(client)
+    client.put(
+        f"/api/agents/{agent['id']}/permissions/quant.paper_trade",
+        json={"granted": True},
+    )
+    action = client.post(
+        f"/api/agents/{agent['id']}/tools/quant.paper_trade/actions",
+        json={"inputs": {"symbol": "DEMO", "quantity": 1}},
+    )
+    assert action.status_code == 200
+    assert action.json()["status"] == "WAITING_APPROVAL"
+    approval = client.post(f"/api/approvals/{action.json()['approval_id']}/approve")
+    assert approval.status_code == 200
+    altered = client.post(
+        f"/api/agents/{agent['id']}/tools/quant.paper_trade/actions",
+        json={
+            "inputs": {"symbol": "OTHER", "quantity": 99},
+            "approval_id": action.json()["approval_id"],
+        },
+    )
+    assert altered.status_code == 403
+    execution = client.post(
+        f"/api/agents/{agent['id']}/tools/quant.paper_trade/actions",
+        json={
+            "inputs": {"symbol": "DEMO", "quantity": 1},
+            "approval_id": action.json()["approval_id"],
+        },
+    )
+    assert execution.status_code == 200
+    assert execution.json()["result"]["mode"] == "PAPER_ONLY"
+    assert client.get("/api/audit/verify").json()["valid"] is True
+
+
+def test_kill_switch_blocks_even_a_permitted_tool(client: TestClient) -> None:
+    agent = seeded_agent(client)
+    client.put(
+        f"/api/agents/{agent['id']}/permissions/calculator",
+        json={"granted": True},
+    )
+    client.put("/api/system/kill-switch", json={"enabled": True})
+    result = client.post(
+        f"/api/agents/{agent['id']}/tools/calculator/actions",
+        json={"inputs": {"expression": "1 + 1"}},
+    )
+    assert result.status_code == 423
+    client.put("/api/system/kill-switch", json={"enabled": False})
+
+
+def test_file_tool_cannot_escape_authorized_workspace(client: TestClient) -> None:
+    agent = seeded_agent(client)
+    client.put(
+        f"/api/agents/{agent['id']}/permissions/file.read",
+        json={"granted": True},
+    )
+    result = client.post(
+        f"/api/agents/{agent['id']}/tools/file.read/actions",
+        json={"inputs": {"path": "../VERSION"}},
+    )
+    assert result.status_code == 403

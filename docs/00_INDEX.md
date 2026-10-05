@@ -16,14 +16,14 @@
 | 10_EVALUATION | Moteur d'évaluation | TESTED (déterministe, minimal) |
 | 11_BENCHMARKS | Benchmarks | TESTED (un benchmark de démonstration) |
 | 12_SKILLS | Compétences réutilisables | PLANNED |
-| 13_TOOLS | Outils | PLANNED |
+| 13_TOOLS | Outils | TESTED (outils sûrs initiaux) |
 | 14_KNOWLEDGE | Knowledge packs | PLANNED |
 | 15_MEMORY | Mémoire | PLANNED |
 | 16_EXPERIENCE | Expérience | PLANNED |
 | 17_SANDBOX | Sandbox | PLANNED |
 | 18_PC_GATEWAY | Passerelle PC | PLANNED |
-| 19_PERMISSIONS | Permissions | PLANNED |
-| 20_SECURITY | Sécurité | DESIGN |
+| 19_PERMISSIONS | Permissions | TESTED (API locale) |
+| 20_SECURITY | Sécurité | IMPLEMENTED (contrôles partiels) |
 | 21_INTERNET_AND_WEB | Accès réseau et web | PLANNED |
 | 22_AGENT_LIBRARY | Bibliothèque | IMPLEMENTED |
 | 23_MISSION_ENGINE | Missions | PLANNED |
@@ -31,7 +31,7 @@
 | 25_ORCHESTRATION | Orchestration | PLANNED |
 | 26_META_AGENTS | Méta-agents | PLANNED |
 | 27_UI_UX | Interface | PLANNED |
-| 28_DATA_MODEL | Données | IMPLEMENTED (agents, évaluations, certificats, activité) |
+| 28_DATA_MODEL | Données | IMPLEMENTED (agents, évaluations, accès, audit) |
 | 29_VERSIONING | Versionnement | DESIGN |
 | 30_API_CONTRACTS | API | IMPLEMENTED |
 | 31_AGENT_CATALOG | Catalogue initial | TESTED |

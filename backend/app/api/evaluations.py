@@ -1,5 +1,6 @@
 from app.core.database import get_db
 from app.models.agent import Agent
+from app.models_provider.ollama import ModelProviderError
 from app.services.evaluation import evaluate_agent
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
@@ -23,6 +24,8 @@ def run_evaluation(
         raise HTTPException(status_code=404, detail="Agent introuvable")
     try:
         result = evaluate_agent(session, agent, request.benchmark_id)
+    except ModelProviderError as error:
+        raise HTTPException(status_code=503, detail=str(error)) from error
     except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error)) from error
     return {

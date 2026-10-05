@@ -2,4 +2,4 @@
 
 ## Statut : IMPLEMENTED (registre initial uniquement)
 
-Le périmètre cible inclut registre, cycle de vie, évaluations, permissions, sandbox, missions, recommandation, apprentissage et interface. À ce stade, seule l'API de registre des agents est implémentée ; les autres éléments sont planifiés.
+Le socle implémenté comprend le registre des agents, transitions partielles, benchmark L1, runtime Ollama, permission manager, outils lecture/calcul/paper trading et audit. Skills/knowledge, missions, recommandation, apprentissage complet, UI, sandbox et orchestration restent planifiés.

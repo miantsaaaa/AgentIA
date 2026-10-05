@@ -2,6 +2,6 @@
 
 ## Statut : TESTED (registre ciblé)
 
-Commande backend : `python -m pytest` dans l'environnement virtuel du projet. Le premier résultat observé sous Python 3.14.3 est 3 tests réussis : health/seed idempotent (35 puis 0), niveau N0 non modifiable à la création, filtres et pagination. L'avertissement Starlette/httpx est sans échec mais devra être résolu en industrialisation.
+Commande backend : `.venv/Scripts/python.exe -m pytest` sous Windows, `python -m pytest` dans le venv sous Linux/macOS. Les tests standard utilisent SQLite éphémère pour isoler l'API et n'exigent pas Ollama ; les parcours de certification/runtime réels sont activés par `AGENTIA_RUN_MODEL_TESTS=1` et appellent le service local et Qwen3-4B. Résultats observés au 2026-10-05 : suite standard 10 passed / 2 skipped ; intégration Ollama (génération provider + certification L1) 2 passed en 66,19 s. Ces tests d'intégration ne sont pas remplacés par des stubs. L'avertissement Starlette/httpx reste à résoudre en industrialisation.
 
 `make release-check` et son script PowerShell ne sont pas encore des portes de release complètes et échouent volontairement tant que frontend et contrôles manquent.

@@ -2,4 +2,4 @@
 
 ## Statut : TESTED (évaluateur minimal)
 
-`POST /api/agents/{id}/evaluations` compare les compétences de la fiche à celles d'un benchmark JSON, conserve score/détails/résultat et journalise l'événement. Un résultat réussi sur le benchmark L1 crée un certificat N1 et change le statut en CERTIFIED ; un échec laisse l'agent N0. Ce premier évaluateur est déterministe et ne mesure que la présence de compétences, pas encore la précision, sécurité, autonomie, temps ni usage d'outils.
+`POST /api/agents/{id}/evaluations` vérifie d'abord les compétences requises, appelle ensuite le vrai modèle local Ollama, conserve la réponse finale (hors blocs `<think>`), calcule les critères du benchmark et journalise résultat et score. Un résultat réussi sur le benchmark L1 crée un certificat N1 ; une indisponibilité modèle répond 503 sans certificat. Cette première grille mesure des critères textuels, la sécurité lexicale et les compétences déclarées ; elle ne prétend pas mesurer complètement précision, autonomie ou qualité métier.
