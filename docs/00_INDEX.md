@@ -15,9 +15,9 @@
 | 09_LEARNING_SYSTEM | Apprentissage | PLANNED |
 | 10_EVALUATION | Moteur d'évaluation | TESTED (déterministe, minimal) |
 | 11_BENCHMARKS | Benchmarks | TESTED (un benchmark de démonstration) |
-| 12_SKILLS | Compétences réutilisables | PLANNED |
-| 13_TOOLS | Outils | TESTED (outils sûrs initiaux) |
-| 14_KNOWLEDGE | Knowledge packs | PLANNED |
+| 12_SKILLS | Compétences réutilisables | TESTED (CRUD et liaison) |
+| 13_TOOLS | Outils | TESTED (catalogue et runners sûrs) |
+| 14_KNOWLEDGE | Knowledge packs | TESTED (CRUD) |
 | 15_MEMORY | Mémoire | PLANNED |
 | 16_EXPERIENCE | Expérience | PLANNED |
 | 17_SANDBOX | Sandbox | PLANNED |
@@ -31,7 +31,7 @@
 | 25_ORCHESTRATION | Orchestration | PLANNED |
 | 26_META_AGENTS | Méta-agents | PLANNED |
 | 27_UI_UX | Interface | PLANNED |
-| 28_DATA_MODEL | Données | IMPLEMENTED (agents, évaluations, audit, missions) |
+| 28_DATA_MODEL | Données | IMPLEMENTED (registres et missions) |
 | 29_VERSIONING | Versionnement | DESIGN |
 | 30_API_CONTRACTS | API | IMPLEMENTED |
 | 31_AGENT_CATALOG | Catalogue initial | TESTED |

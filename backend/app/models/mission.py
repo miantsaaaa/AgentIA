@@ -1,10 +1,9 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from uuid import uuid4
 
-from sqlalchemy import DateTime, ForeignKey, JSON, String, Text
-from sqlalchemy.orm import Mapped, mapped_column
-
 from app.core.database import Base
+from sqlalchemy import JSON, DateTime, ForeignKey, String, Text
+from sqlalchemy.orm import Mapped, mapped_column
 
 
 class Mission(Base):
@@ -16,7 +15,7 @@ class Mission(Base):
     agent_ids: Mapped[list[str]] = mapped_column(JSON)
     status: Mapped[str] = mapped_column(String(30), default="CREATED", index=True)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
+        DateTime(timezone=True), default=lambda: datetime.now(UTC)
     )
 
 
@@ -28,5 +27,5 @@ class MissionEvent(Base):
     previous_status: Mapped[str | None] = mapped_column(String(30), nullable=True)
     current_status: Mapped[str] = mapped_column(String(30))
     created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
+        DateTime(timezone=True), default=lambda: datetime.now(UTC)
     )

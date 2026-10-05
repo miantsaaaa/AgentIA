@@ -3,7 +3,7 @@
 | ID | Priorité | Tâche | Dépendances | État | Document source |
 |---|---|---|---|---|---|
 | P0-01 | P0 | Documenter décisions, setup et workflow Git | - | DONE | 34, 36, 41 |
-| P1-01 | P1 | Étendre le registre aux skills, tools, knowledge et activité | P0-01 | IN_PROGRESS | 04, 28, 30 |
+| P1-01 | P1 | Migrations Alembic et consultation d'activité | P0-01 | IN_PROGRESS | 04, 28, 30 |
 | P2-01 | P2 | Cycle de vie, versionnement, snapshots et rollback certifié | P1-01 | IN_PROGRESS | 06, 08, 29 |
 | P2-02 | P2 | Compléter évaluateur et benchmarks déterministes | P2-01 | IN_PROGRESS | 10, 11 |
 | P2-03 | P2 | Permission Manager, outils sûrs et audit initiaux | P2-02 | DONE | 13, 19, 20 |

@@ -2,4 +2,4 @@
 
 ## Statut : IMPLEMENTED (socle)
 
-Backend FastAPI + Pydantic v2 + SQLAlchemy 2, SQLite local. Données de départ et benchmark versionnés en JSON. Le runtime dépend du protocole `ModelProvider`, actuellement implémenté par Ollama local avec Qwen3-4B testé. L'évaluation utilise une réponse réelle ; en cas d'indisponibilité le runtime retourne 503 et aucune certification n'est créée. L'interface, les autres registres, migrations Alembic et sandbox restent planifiés.
+Backend FastAPI + Pydantic v2 + SQLAlchemy 2, SQLite local. Seeds versionnés JSON couvrent agents, skills, métadonnées de tools, knowledge packs et benchmark. API CRUD pour agents/skills/tools/knowledge et lien AgentSkill ; tools personnalisés sans runner restent inertes. Le runtime dépend de `ModelProvider`, implémenté par Ollama local avec Qwen3-4B testé. Évaluation réelle ; sans Ollama, runtime répond 503 et ne certifie pas. Migrations Alembic, API de consultation d'activité, UI et sandbox restent planifiées.

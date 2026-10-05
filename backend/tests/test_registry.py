@@ -4,6 +4,7 @@ from collections.abc import Generator
 import pytest
 from app.core import database
 from app.main import app
+from app.services.catalog import seed_catalog
 from app.services.registry import seed_agents
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
@@ -234,3 +235,79 @@ def test_mission_transitions_are_persisted_and_invalid_arcs_rejected(client: Tes
     assert planned.json()["status"] == "PLANNED"
     assert running.json()["status"] == "RUNNING"
     assert client.get("/api/missions").json()["total"] == 1
+
+
+def test_catalog_seed_is_idempotent_and_skill_crud_works(client: TestClient) -> None:
+    with Session(database.engine) as session:
+        assert seed_catalog(session) == {"skills": 3, "tools": 5, "knowledge": 1}
+        assert seed_catalog(session) == {"skills": 0, "tools": 0, "knowledge": 0}
+    skill = client.get("/api/skills").json()["items"][0]
+    updated = {
+        "slug": skill["slug"],
+        "name": skill["name"],
+        "domain": skill["domain"],
+        "description": "Description mise à jour par test.",
+        "prerequisites": skill["prerequisites"],
+        "required_tools": skill["required_tools"],
+        "required_level": skill["required_level"],
+        "version": skill["version"],
+        "state": skill["state"],
+    }
+    response = client.put(f"/api/skills/{skill['id']}", json=updated)
+    assert response.status_code == 200
+    assert response.json()["description"] == updated["description"]
+    assert client.delete(f"/api/skills/{skill['id']}").status_code == 204
+    assert client.get(f"/api/skills/{skill['id']}").status_code == 404
+
+
+def test_agent_skill_link_and_knowledge_pack_crud(client: TestClient) -> None:
+    with Session(database.engine) as session:
+        seed_agents(session)
+        seed_catalog(session)
+    agent = client.get("/api/agents", params={"q": "Helpdesk L1"}).json()["items"][0]
+    skill = client.get("/api/skills").json()["items"][0]
+    assert client.put(f"/api/agents/{agent['id']}/skills/{skill['id']}").status_code == 204
+    assert client.put(f"/api/agents/{agent['id']}/skills/{skill['id']}").status_code == 204
+    assert client.delete(f"/api/agents/{agent['id']}/skills/{skill['id']}").status_code == 204
+
+    pack = client.get("/api/knowledge").json()["items"][0]
+    updated = {
+        "slug": pack["slug"],
+        "name": pack["name"],
+        "domain": pack["domain"],
+        "content": "Contenu interne révisé.",
+        "source": pack["source"],
+        "source_license": pack["source_license"],
+        "reliability": pack["reliability"],
+        "version": pack["version"],
+    }
+    updated_pack = client.put(f"/api/knowledge/{pack['id']}", json=updated).json()
+    assert updated_pack["content"] == updated["content"]
+    assert client.delete(f"/api/knowledge/{pack['id']}").status_code == 204
+
+
+def test_tool_metadata_crud_cannot_create_or_modify_an_unbacked_runner(client: TestClient) -> None:
+    with Session(database.engine) as session:
+        seed_catalog(session)
+    records = client.get("/api/tool-registry").json()
+    assert len(records) == 5
+    custom = {
+        "name": "custom.inspect",
+        "description": "Métadonnées de tool non exécutable.",
+        "input_schema": {"type": "object"},
+        "output_schema": {"type": "object"},
+        "risk": "READ",
+        "requires_approval": False,
+        "sandbox_compatible": True,
+        "rollback_supported": False,
+        "dependencies": [],
+        "version": "1.0.0",
+        "license": "MIT",
+    }
+    created = client.post("/api/tool-registry", json=custom)
+    assert created.status_code == 201
+    assert created.json()["executable"] is False
+    native = next(record for record in records if record["name"] == "quant.paper_trade")
+    blocked = client.put(f"/api/tool-registry/{native['id']}", json=custom)
+    assert blocked.status_code == 409
+    assert client.delete(f"/api/tool-registry/{created.json()['id']}").status_code == 204

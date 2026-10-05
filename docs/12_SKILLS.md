@@ -1,5 +1,5 @@
 # Skills
 
-## Statut : PLANNED
+## Statut : TESTED (CRUD et relation agent-skill)
 
-Une skill sera une entité versionnée, réutilisable et liée à des agents, outils, prérequis et benchmarks. Le registre n'est pas encore implémenté.
+Les skills versionnées sont seedées depuis `data/seed/skills.json` et exposées par GET/POST/GET-ID/PUT/DELETE sous `/api/skills`. La relation plusieurs-à-plusieurs agent-skill est stockée dans `agent_skills`, avec liens idempotents. Benchmark dédié de compétence et progression sont PLANNED.

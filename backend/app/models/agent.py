@@ -1,11 +1,10 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 from uuid import uuid4
 
+from app.core.database import Base
 from sqlalchemy import JSON, DateTime, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
-
-from app.core.database import Base
 
 
 class Agent(Base):
@@ -23,7 +22,7 @@ class Agent(Base):
     skills: Mapped[list[str]] = mapped_column(JSON, default=list)
     free_feasibility: Mapped[str] = mapped_column(String(20), default="MOYENNE")
     created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
+        DateTime(timezone=True), default=lambda: datetime.now(UTC)
     )
 
     def to_dict(self) -> dict[str, Any]:

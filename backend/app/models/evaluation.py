@@ -1,10 +1,9 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from uuid import uuid4
 
-from sqlalchemy import Boolean, DateTime, ForeignKey, JSON, String, UniqueConstraint
-from sqlalchemy.orm import Mapped, mapped_column
-
 from app.core.database import Base
+from sqlalchemy import JSON, Boolean, DateTime, ForeignKey, String, UniqueConstraint
+from sqlalchemy.orm import Mapped, mapped_column
 
 
 class Evaluation(Base):
@@ -17,7 +16,7 @@ class Evaluation(Base):
     passed: Mapped[bool] = mapped_column(Boolean)
     details: Mapped[dict[str, object]] = mapped_column(JSON)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
+        DateTime(timezone=True), default=lambda: datetime.now(UTC)
     )
 
 
@@ -30,7 +29,7 @@ class Certificate(Base):
     level: Mapped[str] = mapped_column(String(2))
     evaluation_id: Mapped[str] = mapped_column(ForeignKey("evaluations.id"), unique=True)
     issued_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
+        DateTime(timezone=True), default=lambda: datetime.now(UTC)
     )
 
 
@@ -42,5 +41,5 @@ class ActivityEvent(Base):
     event_type: Mapped[str] = mapped_column(String(80), index=True)
     details: Mapped[dict[str, object]] = mapped_column(JSON)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
+        DateTime(timezone=True), default=lambda: datetime.now(UTC)
     )

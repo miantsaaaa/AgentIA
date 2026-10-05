@@ -1,0 +1,5 @@
+[
+  {"slug":"support-triage","name":"Triage de demandes support","domain":"Support utilisateur","description":"Qualifier une demande, relever les symptômes et établir une priorité sans demander de secret.","prerequisites":[],"required_tools":["text.search"],"required_level":"N0","version":"1.0.0","state":"AVAILABLE"},
+  {"slug":"diagnostic-windows","name":"Diagnostic Windows non destructif","domain":"Administration système","description":"Collecter des informations de diagnostic sans modifier le système.","prerequisites":[],"required_tools":["file.read"],"required_level":"N0","version":"1.0.0","state":"AVAILABLE"},
+  {"slug":"qa-api","name":"Validation d'API","domain":"Qualité logicielle","description":"Exercer une API et vérifier ses réponses attendues.","prerequisites":[],"required_tools":["calculator"],"required_level":"N0","version":"1.0.0","state":"AVAILABLE"}
+]
