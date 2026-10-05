@@ -4,6 +4,7 @@
 |---|---|---|---|---|---|
 | P0-01 | P0 | Documenter décisions, setup et workflow Git | - | DONE | 34, 36, 41 |
 | P0-02 | P0 | Scripts cross-platform isolés dans le venv du projet | P0-01 | DONE | 36, 37 |
+| P0-03 | P0 | Règles communes et contrôle automatique d'organisation | P0-01 | DONE | AGENTS.md, 42 |
 | P1-01 | P1 | API de consultation d'activité | P0-01 | IN_PROGRESS | 04, 28, 30 |
 | P2-01 | P2 | Cycle de vie, versionnement, snapshots et rollback certifié | P1-01 | IN_PROGRESS | 06, 08, 29 |
 | P2-02 | P2 | Compléter évaluateur et benchmarks déterministes | P2-01 | IN_PROGRESS | 10, 11 |

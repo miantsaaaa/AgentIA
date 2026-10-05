@@ -17,6 +17,7 @@
 | DEC-011 | Dépôt distant non vérifié pour visibilité/contenu ; aucun push autorisé actuellement | `gh` absent ; vérifier `git ls-remote` et visibilité avant v0.1.0. |
 | DEC-012 | Modèle par défaut Qwen3-4B sous Apache-2.0 | Ollama affiche `qwen3:4b`, ID local `359d7dd4bcda`; la carte officielle Qwen indique Apache-2.0. Génération locale observée ; utiliser un autre modèle implique de revalider sa licence et les benchmarks. |
 | DEC-013 | Alembic est la source de vérité du schéma SQLite | `create_schema` applique `upgrade head`; un schéma complet non versionné est estampillé à head sans recréation. Un schéma partiel est refusé et demande une migration dédiée. Upgrade/downgrade et adoption sont testés. |
+| DEC-014 | Le workflow des agents est contrôlé par `AGENTS.md` et un check local | Les changements sont petits, testés avant commit, synchronisés avec la doc et limités au workspace ; l'index documentaire et les dossiers requis sont vérifiés par lint, hook et porte de release. |
 
 ## En attente / PLANNED
 

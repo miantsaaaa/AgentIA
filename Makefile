@@ -38,6 +38,7 @@ seed:
 
 lint:
 	$(PYTHON) -m ruff check backend scripts
+	$(PYTHON) scripts/check_repo_organization.py
 
 release-check:
 	$(PYTHON) scripts/release_check.py

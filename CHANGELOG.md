@@ -13,6 +13,7 @@ Les changements notables sont consignés ici, selon Keep a Changelog. Le format 
 - Registres CRUD de skills, tools et knowledge packs, avec seeds versionnés et idempotents.
 - Liens AgentSkill et scripts PowerShell/Bash installant uniquement dans le venv du projet.
 - Migration initiale Alembic et adoption sans perte des bases complètes préexistantes.
+- Règles communes de travail des agents et vérification automatisée de l'organisation documentaire.
 
 ### Sécurité
 - Aucun endpoint ne permet de modifier librement le niveau d'un agent.

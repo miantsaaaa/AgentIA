@@ -6,3 +6,4 @@ else
     PYTHON=.venv/bin/python
 fi
 "$PYTHON" -m ruff check backend scripts
+"$PYTHON" scripts/check_repo_organization.py

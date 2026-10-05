@@ -45,5 +45,6 @@
 | 39_FREE_STACK | Dépendances gratuites | IMPLEMENTED |
 | 40_AGENT_PRIORITY | Priorités T1-T5 | TESTED |
 | 41_GIT_WORKFLOW | Git et releases | IMPLEMENTED |
+| 42_AGENT_WORKFLOW | Méthode de travail des agents | DESIGN |
 
 Les documents thématiques sont les fichiers numérotés correspondants dans ce répertoire. Les routes réelles sont également exposées par `/openapi.json`.

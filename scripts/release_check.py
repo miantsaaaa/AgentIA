@@ -8,6 +8,7 @@ def run(label: str, command: list[str]) -> None:
 
 
 try:
+    run("Organisation du dépôt", [sys.executable, "scripts/check_repo_organization.py"])
     run("Tests backend", [sys.executable, "-m", "pytest"])
     run("Lint backend", [sys.executable, "-m", "ruff", "check", "backend"])
     run("Hygiène fichiers indexés", [sys.executable, "scripts/check_staged_files.py"])
