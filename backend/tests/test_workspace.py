@@ -267,3 +267,32 @@ def test_api_approve_conflict_on_non_pending(api_client):
     client.post(f"/api/workspace/{change_id}/approve", json={})
     resp2 = client.post(f"/api/workspace/{change_id}/approve", json={})
     assert resp2.status_code == 409
+
+
+def test_api_hash_mismatch_returns_409(api_client):
+    """POST /apply retourne 409 avec code HASH_MISMATCH si le fichier a dérivé."""
+    client, tmp_path = api_client
+
+    # 1. Proposer
+    resp = client.post(
+        "/api/workspace/propose",
+        json={
+            "relative_path": "drift.txt",
+            "proposed_content": "nouveau contenu\n",
+            "requester": "test-bot",
+        },
+    )
+    assert resp.status_code == 200
+    change_id = resp.json()["id"]
+
+    # 2. Approuver
+    resp = client.post(f"/api/workspace/{change_id}/approve", json={})
+    assert resp.status_code == 200
+
+    # 3. Écrire un contenu différent sur disque (simule une dérive)
+    (tmp_path / "drift.txt").write_text("contenu différent\n", encoding="utf-8")
+
+    # 4. Appliquer — doit retourner 409 HASH_MISMATCH
+    resp = client.post(f"/api/workspace/{change_id}/apply")
+    assert resp.status_code == 409
+    assert resp.json()["code"] == "HASH_MISMATCH"

@@ -1,6 +1,8 @@
 from app.core.database import get_db
 from app.services import workspace as ws_service
+from app.services.workspace import HashMismatchError
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
@@ -76,6 +78,8 @@ def apply(change_id: str, session: Session = Depends(get_db)) -> dict:
         change = ws_service.apply_change(session, change_id)
     except KeyError:
         raise HTTPException(status_code=404, detail="Proposition introuvable")
+    except HashMismatchError as e:
+        return JSONResponse(status_code=409, content={"detail": str(e), "code": "HASH_MISMATCH"})
     except ValueError as e:
         raise HTTPException(status_code=409, detail=str(e))
     return change.to_dict()
