@@ -26,12 +26,12 @@
 | 20_SECURITY | Sécurité | IMPLEMENTED (contrôles partiels) |
 | 21_INTERNET_AND_WEB | Accès réseau et web | PLANNED |
 | 22_AGENT_LIBRARY | Bibliothèque | IMPLEMENTED |
-| 23_MISSION_ENGINE | Missions | PLANNED |
-| 24_AGENT_RECOMMENDER | Recommandation | PLANNED |
+| 23_MISSION_ENGINE | Missions | IMPLEMENTED (cycle persistant) |
+| 24_AGENT_RECOMMENDER | Recommandation | TESTED (déterministe) |
 | 25_ORCHESTRATION | Orchestration | PLANNED |
 | 26_META_AGENTS | Méta-agents | PLANNED |
 | 27_UI_UX | Interface | PLANNED |
-| 28_DATA_MODEL | Données | IMPLEMENTED (agents, évaluations, accès, audit) |
+| 28_DATA_MODEL | Données | IMPLEMENTED (agents, évaluations, audit, missions) |
 | 29_VERSIONING | Versionnement | DESIGN |
 | 30_API_CONTRACTS | API | IMPLEMENTED |
 | 31_AGENT_CATALOG | Catalogue initial | TESTED |

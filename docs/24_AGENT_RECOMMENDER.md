@@ -1,5 +1,5 @@
 # Recommandation
 
-## Statut : PLANNED
+## Statut : TESTED (moteur déterministe)
 
-Le premier moteur sera déterministe, explicable et testable sans modèle ; une amélioration par modèle local sera optionnelle. Non implémenté.
+`POST /api/recommendations` normalise les mots, compare demande aux noms, domaines, descriptions et compétences, pondère niveau/statut et retourne scores, termes correspondants, justification et lacunes. Ce chemin est déterministe et testé sans génération artificielle. L'orchestration multi-agent et l'amélioration optionnelle par LLM sont PLANNED.

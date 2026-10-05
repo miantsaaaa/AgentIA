@@ -9,6 +9,7 @@ Les changements notables sont consignés ici, selon Keep a Changelog. Le format 
 - Transitions d'état contrôlées, benchmark déterministe L1, évaluations, certificat N1 et événements d'activité.
 - Permission Manager refusant par défaut, outils lecture/calcul/paper trading, kill switch et audit SHA-256 chaîné.
 - Provider Ollama réel, runtime d'agent et benchmark L1 basé sur la réponse réelle de Qwen3-4B.
+- Recommandation déterministe explicable et machine d'état de mission persistée.
 
 ### Sécurité
 - Aucun endpoint ne permet de modifier librement le niveau d'un agent.

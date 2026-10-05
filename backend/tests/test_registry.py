@@ -194,3 +194,43 @@ def test_file_tool_cannot_escape_authorized_workspace(client: TestClient) -> Non
         json={"inputs": {"path": "../VERSION"}},
     )
     assert result.status_code == 403
+
+
+def test_recommendation_explains_match_and_remaining_gaps(client: TestClient) -> None:
+    with Session(database.engine) as session:
+        seed_agents(session)
+    response = client.post(
+        "/api/recommendations",
+        json={"request": "support utilisateur et triage", "limit": 3},
+    )
+    assert response.status_code == 200
+    recommendation = response.json()["recommendations"][0]
+    assert recommendation["name"] == "Helpdesk L1"
+    assert "triage" in recommendation["matched_terms"]
+    assert "N0" in recommendation["gaps"][0]
+
+
+def test_mission_transitions_are_persisted_and_invalid_arcs_rejected(client: TestClient) -> None:
+    agent = seeded_agent(client)
+    created = client.post(
+        "/api/missions",
+        json={"objective": "Diagnostiquer une erreur CRM", "agent_ids": [agent["id"]]},
+    )
+    assert created.status_code == 201
+    mission_id = created.json()["id"]
+    invalid = client.post(
+        f"/api/missions/{mission_id}/transitions",
+        json={"target_status": "RUNNING"},
+    )
+    assert invalid.status_code == 409
+    planned = client.post(
+        f"/api/missions/{mission_id}/transitions",
+        json={"target_status": "PLANNED"},
+    )
+    running = client.post(
+        f"/api/missions/{mission_id}/transitions",
+        json={"target_status": "RUNNING"},
+    )
+    assert planned.json()["status"] == "PLANNED"
+    assert running.json()["status"] == "RUNNING"
+    assert client.get("/api/missions").json()["total"] == 1
