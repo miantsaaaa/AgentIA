@@ -1,19 +1,44 @@
 .PHONY: setup dev test seed lint release-check
 
+ifeq ($(OS),Windows_NT)
+PS = powershell -NoProfile -ExecutionPolicy Bypass -File
+PYTHON = .venv/Scripts/python.exe
+
 setup:
-	python -m pip install -e ".[dev]"
+	$(PS) scripts/setup.ps1
 
 dev:
-	python -m uvicorn app.main:app --app-dir backend --reload
+	$(PS) scripts/dev.ps1
 
 test:
-	python -m pytest
+	$(PS) scripts/test.ps1
 
 seed:
-	python scripts/seed.py
+	$(PS) scripts/seed.ps1
 
 lint:
-	python -m ruff check backend
+	$(PS) scripts/lint.ps1
 
 release-check:
-	python scripts/release_check.py
+	$(PS) scripts/release_check.ps1
+else
+PYTHON = .venv/bin/python
+
+setup:
+	sh scripts/setup.sh
+
+dev:
+	$(PYTHON) -m uvicorn app.main:app --app-dir backend --reload
+
+test:
+	$(PYTHON) -m pytest
+
+seed:
+	$(PYTHON) scripts/seed.py
+
+lint:
+	$(PYTHON) -m ruff check backend scripts
+
+release-check:
+	$(PYTHON) scripts/release_check.py
+endif

@@ -1,3 +1,8 @@
 #!/usr/bin/env sh
 set -eu
-python -m pytest
+if [ -x .venv/Scripts/python.exe ]; then
+	PYTHON=.venv/Scripts/python.exe
+else
+	PYTHON=.venv/bin/python
+fi
+"$PYTHON" -m pytest

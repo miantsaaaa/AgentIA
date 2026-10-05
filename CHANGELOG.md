@@ -11,7 +11,7 @@ Les changements notables sont consignés ici, selon Keep a Changelog. Le format 
 - Provider Ollama réel, runtime d'agent et benchmark L1 basé sur la réponse réelle de Qwen3-4B.
 - Recommandation déterministe explicable et machine d'état de mission persistée.
 - Registres CRUD de skills, tools et knowledge packs, avec seeds versionnés et idempotents.
-- CRUD persistant skills, métadonnées de tools et knowledge packs, seed JSON idempotent et liens AgentSkill.
+- Liens AgentSkill et scripts PowerShell/Bash installant uniquement dans le venv du projet.
 
 ### Sécurité
 - Aucun endpoint ne permet de modifier librement le niveau d'un agent.

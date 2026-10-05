@@ -1,2 +1,2 @@
 $ErrorActionPreference = "Stop"
-python -m app.seed --app-dir backend
+& .\.venv\Scripts\python.exe scripts/seed.py

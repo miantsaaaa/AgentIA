@@ -1,2 +1,2 @@
 $ErrorActionPreference = "Stop"
-python -m pytest
+& .\.venv\Scripts\python.exe -m pytest
