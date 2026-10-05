@@ -1,5 +1,5 @@
 # Benchmarks
 
-## Statut : PLANNED
+## Statut : TESTED (benchmark de démonstration)
 
-Les benchmarks seront créés en interne, déterministes et distribués avec leur licence et leur version. Aucun benchmark n'est encore chargé.
+`data/seed/benchmarks.json` contient `helpdesk-l1-foundations-v1`, un benchmark interne qui exige `support utilisateur` et `triage`. Il sert à tester le cycle certificat N1 ; d'autres scénarios fonctionnels et adversariaux restent PLANNED.

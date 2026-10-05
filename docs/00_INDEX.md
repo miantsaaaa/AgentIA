@@ -9,12 +9,12 @@
 | 03_SCOPE | Périmètre | DESIGN |
 | 04_ARCHITECTURE | Architecture cible et réelle | IMPLEMENTED |
 | 05_AGENT_MODEL | Modèle agent | IMPLEMENTED |
-| 06_AGENT_LEVELS | Niveaux certifiés | DESIGN |
+| 06_AGENT_LEVELS | Niveaux certifiés | IMPLEMENTED (N0-N1) |
 | 07_AGENT_IDENTITY_CARD | Fiche d'identité | IMPLEMENTED |
-| 08_AGENT_LIFECYCLE | Cycle de vie | PLANNED |
+| 08_AGENT_LIFECYCLE | Cycle de vie | IMPLEMENTED (transitions partielles) |
 | 09_LEARNING_SYSTEM | Apprentissage | PLANNED |
-| 10_EVALUATION | Moteur d'évaluation | PLANNED |
-| 11_BENCHMARKS | Benchmarks | PLANNED |
+| 10_EVALUATION | Moteur d'évaluation | TESTED (déterministe, minimal) |
+| 11_BENCHMARKS | Benchmarks | TESTED (un benchmark de démonstration) |
 | 12_SKILLS | Compétences réutilisables | PLANNED |
 | 13_TOOLS | Outils | PLANNED |
 | 14_KNOWLEDGE | Knowledge packs | PLANNED |
@@ -31,11 +31,11 @@
 | 25_ORCHESTRATION | Orchestration | PLANNED |
 | 26_META_AGENTS | Méta-agents | PLANNED |
 | 27_UI_UX | Interface | PLANNED |
-| 28_DATA_MODEL | Données | IMPLEMENTED |
+| 28_DATA_MODEL | Données | IMPLEMENTED (agents, évaluations, certificats, activité) |
 | 29_VERSIONING | Versionnement | DESIGN |
 | 30_API_CONTRACTS | API | IMPLEMENTED |
 | 31_AGENT_CATALOG | Catalogue initial | TESTED |
-| 32_ROADMAP | Jalons | PLANNED |
+| 32_ROADMAP | Jalons | IN_PROGRESS |
 | 33_TODO | Tâches | IN_PROGRESS |
 | 34_DECISIONS | Décisions | IMPLEMENTED |
 | 35_CHANGELOG | Historique | IMPLEMENTED |

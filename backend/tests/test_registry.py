@@ -56,3 +56,42 @@ def test_agent_filters_and_pagination(client: TestClient) -> None:
     assert response.status_code == 200
     assert response.json()["total"] == 5
     assert len(response.json()["items"]) == 2
+
+
+def test_only_successful_evaluation_issues_level_certificate(client: TestClient) -> None:
+    with Session(database.engine) as session:
+        seed_agents(session)
+    agent = client.get("/api/agents", params={"q": "Helpdesk L1"}).json()["items"][0]
+    result = client.post(
+        f"/api/agents/{agent['id']}/evaluations",
+        json={"benchmark_id": "helpdesk-l1-foundations-v1"},
+    )
+    assert result.status_code == 200
+    assert result.json()["passed"] is True
+    assert result.json()["agent_level"] == "N1"
+    assert result.json()["agent_status"] == "CERTIFIED"
+
+
+def test_failed_evaluation_keeps_agent_at_n0(client: TestClient) -> None:
+    with Session(database.engine) as session:
+        seed_agents(session)
+    agent = client.get("/api/agents", params={"q": "Backend"}).json()["items"][0]
+    result = client.post(
+        f"/api/agents/{agent['id']}/evaluations",
+        json={"benchmark_id": "helpdesk-l1-foundations-v1"},
+    )
+    assert result.status_code == 200
+    assert result.json()["passed"] is False
+    assert result.json()["agent_level"] == "N0"
+    assert result.json()["details"]["missing_skills"]
+
+
+def test_invalid_lifecycle_transition_is_rejected(client: TestClient) -> None:
+    with Session(database.engine) as session:
+        seed_agents(session)
+    agent = client.get("/api/agents", params={"page_size": 1}).json()["items"][0]
+    response = client.post(
+        f"/api/agents/{agent['id']}/transitions",
+        json={"target_status": "PRODUCTION"},
+    )
+    assert response.status_code == 409

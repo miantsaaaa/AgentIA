@@ -1,0 +1,9 @@
+[
+  {
+    "id": "helpdesk-l1-foundations-v1",
+    "name": "Fondamentaux du support utilisateur L1",
+    "certifies_level": "N1",
+    "required_skills": ["support utilisateur", "triage"],
+    "minimum_score": 1.0
+  }
+]

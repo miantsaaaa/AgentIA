@@ -1,5 +1,5 @@
 # Cycle de vie
 
-## Statut : PLANNED
+## Statut : IMPLEMENTED (transitions partielles)
 
-Transitions cibles : DRAFT → TRAINING → EVALUATION → CERTIFIED → AVAILABLE → PRODUCTION → IMPROVEMENT. Aucune machine à états n'est encore implémentée.
+Transitions permises par l'API : DRAFT→TRAINING, TRAINING→DRAFT/EVALUATION, EVALUATION→TRAINING, CERTIFIED→AVAILABLE, AVAILABLE→PRODUCTION/TRAINING, PRODUCTION→IMPROVEMENT, IMPROVEMENT→TRAINING. Toute autre transition répond 409 et chaque transition permise ajoute un événement d'activité. CERTIFIED est atteint par l'évaluateur uniquement. Snapshots, branche d'apprentissage et promotion versionnée restent PLANNED.

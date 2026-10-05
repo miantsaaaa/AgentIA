@@ -1,5 +1,5 @@
 # Modèle de données
 
-## Statut : IMPLEMENTED (Agent seulement)
+## Statut : IMPLEMENTED (premières entités)
 
-SQLite contient actuellement `agents` avec slug unique, palier, niveau, statut, version, compétences et faisabilité gratuite. Les migrations Alembic et les autres entités sont PLANNED.
+SQLite contient `agents`, `evaluations`, `certificates` et `activity_events`. Les événements sont append-only via l'API actuelle mais sans chaîne de hash ni protection contre un accès direct à la base. Migrations Alembic, skills, tools, knowledge, missions et snapshots restent PLANNED.
